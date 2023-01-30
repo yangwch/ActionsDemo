@@ -24,4 +24,5 @@ jobs:
           node-version: 14
       - run: |
           node -v
+          echo secrect ${{ secrets.MYSECRET }}
           curl localhost:8080
