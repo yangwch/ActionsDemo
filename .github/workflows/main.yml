@@ -9,20 +9,37 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    services:
-      nginx:
-        image: nginx
-        ports:
-          - 8080:80
-        env:
-          NGINX_PORT: 80
+    # services:
+    #   nginx:
+    #     image: nginx
+    #     ports:
+    #       - 8080:80
+    #     env:
+    #       NGINX_PORT: 80
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build
+        uses: actions/setup-node@v3
         with:
           node-version: 14
       - run: |
           node -v
-          echo secrect ${{ secrets.MYSECRET }}
-          curl localhost:8080
+          npm install
+          npm run build
+
+      - name: Deploy
+        uses: actions/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /home/yang/deploy
+            wget https://github.com/yangwch/ActionsDemo/archive/refs/heads/main.zip
+            rm -rf main
+            tar zxvf main.zip
+            echo get repo complete!
