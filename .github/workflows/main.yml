@@ -27,8 +27,8 @@ jobs:
           node-version: 14
       - run: |
           node -v
-          npm install
-          npm run build
+          # npm install
+          # npm run build
 
       - name: Deploy
         uses: appleboy/ssh-action@master
