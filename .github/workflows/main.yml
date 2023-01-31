@@ -35,11 +35,11 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
+          key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
             cd /home/yang/deploy
-            wget https://github.com/yangwch/ActionsDemo/archive/refs/heads/main.zip
             rm -rf main
+            wget https://github.com/yangwch/ActionsDemo/archive/refs/heads/main.zip
             tar zxvf main.zip
             echo get repo complete!
